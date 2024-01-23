@@ -34,7 +34,7 @@ const LeftMenu = () => {
               <ul className="pl-6">
                 <li>
                   <Link
-                    to="#"
+                    to="/unitlessions"
                     className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
                   >
                     Unit & Lessons
@@ -42,7 +42,7 @@ const LeftMenu = () => {
                 </li>
                 <li>
                   <Link
-                    to="#"
+                    to="/outcomes"
                     className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
                   >
                     Outcomes

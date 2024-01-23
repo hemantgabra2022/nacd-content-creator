@@ -1,13 +1,18 @@
-// src/App.js
+// App.js
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LeftMenu from "./components/leftmenu";
-import RightContent from "./components/rightcontent";
+import UnitLessions from "./screens/Units/UnitLessions/UnitLessions";
+import Outcomes from "./screens/Units/Outcomes/Outcomes";
 
 function App() {
   return (
     <div className="flex bg-red-500">
       <LeftMenu />
-      <RightContent />
+      <Routes>
+        <Route path="/unitlessions" element={<UnitLessions />} />
+        <Route path="/outcomes" element={<Outcomes />} />
+      </Routes>
     </div>
   );
 }
