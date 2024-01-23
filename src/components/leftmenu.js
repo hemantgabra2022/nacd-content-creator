@@ -1,7 +1,7 @@
 // src/LeftMenu.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../assets/img/nacd_logo.png";
+import Logo from "../assets/img/white_nacd_logo.png";
 
 const LeftMenu = () => {
   const [showSubMenu, setShowSubMenu] = useState(false);
