@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import RightContent from "../../../components/rightcontent";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker-cssmodules.css"; // Use this line if you are using CSS modules
 
 const Summative = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -7,9 +10,11 @@ const Summative = () => {
     gradeName: "",
     unitName: "",
     assessmentName: "",
-    lastDate: "",
+    lastDate: null,
     literacyType: "",
     assessmentType: "",
+    pdf: null,
+    description: "",
   });
 
   const [editIndex, setEditIndex] = useState(null);
@@ -21,11 +26,15 @@ const Summative = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditIndex(null);
-    // Reset gradeName and unitName when closing the modal
     setFormData({
-      ...formData,
       gradeName: "",
       unitName: "",
+      assessmentName: "",
+      lastDate: null,
+      literacyType: "",
+      assessmentType: "",
+      pdf: null,
+      description: "",
     });
   };
 
@@ -37,6 +46,7 @@ const Summative = () => {
       assessment: "Assessment 1",
       literacyType: "Type A",
       assessmentType: "Type X",
+      lastDate: new Date("2024-01-31"), // Convert to Date object
     },
     {
       title: "Sample Grade 2",
@@ -45,6 +55,7 @@ const Summative = () => {
       assessment: "Assessment 2",
       literacyType: "Type B",
       assessmentType: "Type Y",
+      lastDate: new Date("2024-02-15"), // Convert to Date object
     },
     // ... (more data)
   ]);
@@ -65,7 +76,11 @@ const Summative = () => {
   );
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "pdf") {
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -75,9 +90,10 @@ const Summative = () => {
       title: formData.gradeName,
       description: formData.unitName,
       assessment: formData.assessmentName,
-      pdf: "", // Set the PDF value accordingly
+      pdf: formData.pdf ? formData.pdf.name : "",
       literacyType: formData.literacyType,
       assessmentType: formData.assessmentType,
+      lastDate: new Date(formData.lastDate), // Convert to Date object
     };
 
     if (editIndex !== null) {
@@ -94,9 +110,11 @@ const Summative = () => {
       gradeName: "",
       unitName: "",
       assessmentName: "",
-      lastDate: "",
+      lastDate: null,
       literacyType: "",
       assessmentType: "",
+      pdf: null,
+      description: "",
     });
     setEditIndex(null);
 
@@ -118,9 +136,11 @@ const Summative = () => {
       gradeName: selectedRow.title,
       unitName: selectedRow.description,
       assessmentName: selectedRow.assessment,
-      lastDate: "", // Set the last date value accordingly
+      lastDate: new Date(selectedRow.lastDate), // Convert to Date object
       literacyType: selectedRow.literacyType,
       assessmentType: selectedRow.assessmentType,
+      pdf: null,
+      description: "",
     });
     setEditIndex(index);
     openModal();
@@ -128,7 +148,7 @@ const Summative = () => {
 
   return (
     <RightContent>
-      <div className="px-4 py-8">
+      <div className="px-4">
         <h1 className="text-3xl font-bold mb-4">Summative Assessments</h1>
         <div className="bg-white p-4 rounded shadow-md">
           <div className="flex items-center mb-4">
@@ -201,10 +221,20 @@ const Summative = () => {
                   <td className="border p-2">{data.title}</td>
                   <td className="border p-2">{data.description}</td>
                   <td className="border p-2">{data.assessment}</td>
-                  <td className="border p-2">{data.pdf}</td>
+                  <td className="border p-2">
+                    {data.lastDate.toLocaleDateString()}
+                  </td>
                   <td className="border p-2">{data.literacyType}</td>
                   <td className="border p-2">{data.assessmentType}</td>
-                  <td className="border p-2">{data.pdf}</td>
+                  <td className="border p-2">
+                    <a
+                      href={`path/to/pdf/${data.pdf}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {data.pdf}
+                    </a>
+                  </td>
                   <td className="border p-2">{data.description}</td>
                   <td className="border p-2">
                     <span
@@ -231,7 +261,7 @@ const Summative = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-8 w-1/2 rounded shadow-md">
-            <div className="flex">
+            <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold mb-4">Create Assessment</h2>
               <button
                 className="text-gray-500 hover:text-gray-700"
@@ -297,13 +327,13 @@ const Summative = () => {
                 <label className="block text-sm font-medium text-gray-600">
                   Last date to attend
                 </label>
-                <input
-                  type="text"
+                <ReactDatePicker
+                  selected={formData.lastDate}
+                  onChange={(date) =>
+                    setFormData({ ...formData, lastDate: date })
+                  }
+                  dateFormat="yyyy-MM-dd"
                   className="mt-1 p-2 border rounded w-full"
-                  placeholder="Enter last date to attend"
-                  name="lastDate"
-                  value={formData.lastDate}
-                  onChange={handleChange}
                 />
               </div>
               <div className="mb-4">
@@ -331,6 +361,30 @@ const Summative = () => {
                   value={formData.assessmentType}
                   onChange={handleChange}
                 />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">
+                  PDF
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  className="mt-1 p-2 border rounded w-full"
+                  onChange={handleChange}
+                  name="pdf"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">
+                  Description
+                </label>
+                <textarea
+                  className="mt-1 p-2 border rounded w-full"
+                  placeholder="Enter description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                ></textarea>
               </div>
               <div className="flex justify-end">
                 <button

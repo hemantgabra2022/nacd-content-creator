@@ -16,7 +16,7 @@ const LeftMenu = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white w-64 min-h-screen">
+    <div className="bg-[#458dff] text-white w-64 min-h-screen">
       <div className="p-4">
         <div className="flex flex-col items-center">
           <img src={Logo} alt="NACD" width="70%" className="mb-4" />
@@ -25,7 +25,7 @@ const LeftMenu = () => {
           <li>
             <div
               onClick={toggleSubMenu}
-              className="flex items-center justify-between hover:bg-gray-700 px-4 py-2 rounded transition duration-300 cursor-pointer"
+              className="flex items-center justify-between hover:bg-blue-700 px-4 py-2 rounded transition duration-300 cursor-pointer"
             >
               <span>Units</span>
               <span className="ml-2">{showSubMenu ? "▲" : "▼"}</span>
@@ -35,7 +35,7 @@ const LeftMenu = () => {
                 <li>
                   <Link
                     to="/unitlessions"
-                    className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
+                    className="block hover:bg-blue-700 px-2 py-1 rounded transition duration-300"
                   >
                     Unit & Lessons
                   </Link>
@@ -43,7 +43,7 @@ const LeftMenu = () => {
                 <li>
                   <Link
                     to="/outcomes"
-                    className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
+                    className="block hover:bg-blue-700 px-2 py-1 rounded transition duration-300"
                   >
                     Outcomes
                   </Link>
@@ -51,7 +51,7 @@ const LeftMenu = () => {
                 <li>
                   <Link
                     to="/learningroadmap"
-                    className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
+                    className="block hover:bg-blue-700 px-2 py-1 rounded transition duration-300"
                   >
                     Learning Roadmap
                   </Link>
@@ -63,7 +63,7 @@ const LeftMenu = () => {
           <li>
             <div
               onClick={toggleSecondSubMenu}
-              className="flex items-center justify-between hover:bg-gray-700 px-4 py-2 rounded transition duration-300 cursor-pointer"
+              className="flex items-center justify-between hover:bg-blue-700 px-4 py-2 rounded transition duration-300 cursor-pointer"
             >
               <span>Assessments</span>
               <span className="ml-2">{showSecondSubMenu ? "▲" : "▼"}</span>
@@ -73,7 +73,7 @@ const LeftMenu = () => {
                 <li>
                   <Link
                     to="/Formative"
-                    className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
+                    className="block hover:bg-blue-700 px-2 py-1 rounded transition duration-300"
                   >
                     Formative
                   </Link>
@@ -81,7 +81,7 @@ const LeftMenu = () => {
                 <li>
                   <Link
                     to="/Summative"
-                    className="block hover:bg-gray-700 px-2 py-1 rounded transition duration-300"
+                    className="block hover:bg-blue-700 px-2 py-1 rounded transition duration-300"
                   >
                     Summative
                   </Link>

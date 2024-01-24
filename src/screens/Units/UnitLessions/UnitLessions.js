@@ -14,7 +14,7 @@ const UnitLessions = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
+
   // Dummy data for table
   const dummyData = [
     {
@@ -89,10 +89,8 @@ const UnitLessions = () => {
     },
   ];
 
-  const [data, setData] = useState(
-    dummyData
-  );
-  const maxId = Math.max(...data.map(item => item.id), 0);
+  const [data, setData] = useState(dummyData);
+  const maxId = Math.max(...data.map((item) => item.id), 0);
   let nextId = maxId + 1;
 
   const createUnit = async (e) => {
@@ -109,10 +107,10 @@ const UnitLessions = () => {
     setData((prevData) => [...prevData, newUnit]);
 
     // Reset the form data
-    setUnitName('');
-    setLessonName('');
-    setDuration('');
-    setAssessment('');
+    setUnitName("");
+    setLessonName("");
+    setDuration("");
+    setAssessment("");
     closeModal();
   };
 
@@ -120,9 +118,9 @@ const UnitLessions = () => {
     setIsModalOpen(true);
     setIsUpdateMode(true);
     setUpdateItemId(itemId);
-  
+
     const selectedItem = data.find((item) => item.id === itemId);
-  
+
     if (selectedItem) {
       setUnitName(selectedItem.unitName);
       setLessonName(selectedItem.lessonName);
@@ -133,10 +131,10 @@ const UnitLessions = () => {
       closeModal();
     }
   };
-  
+
   const updateUnit = (e) => {
     e.preventDefault();
-  
+
     const updatedData = data.map((item) =>
       item.id === updateItemId
         ? {
@@ -148,33 +146,29 @@ const UnitLessions = () => {
           }
         : item
     );
-  
+
     setData(updatedData);
     closeModal();
     // Reset form fields
-    setUnitName('');
-    setLessonName('');
-    setDuration('');
-    setAssessment('');
+    setUnitName("");
+    setLessonName("");
+    setDuration("");
+    setAssessment("");
   };
 
-  const [unitName, setUnitName] = useState('');
-  const [lessonName, setLessonName] = useState('');
-  const [duration, setDuration] = useState('');
-  const [assessment, setAssessment] = useState('');
+  const [unitName, setUnitName] = useState("");
+  const [lessonName, setLessonName] = useState("");
+  const [duration, setDuration] = useState("");
+  const [assessment, setAssessment] = useState("");
 
   const handleDelete = (itemId) => {
     console.log(itemId);
     setData((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
-  
-
-  
-
   return (
     <RightContent>
-      <div className="px-4 py-8">
+      <div className="px-4">
         <h1 className="text-3xl font-bold mb-4">Unit & Lessons</h1>
         <div className="bg-white p-4 rounded shadow-md">
           <div className="flex items-center mb-4">
@@ -215,13 +209,17 @@ const UnitLessions = () => {
                   <td className="border p-2">{data.duration}</td>
                   <td className="border p-2">{data.assessment}</td>
                   <td className="border p-2">
-                    <span className="text-blue-500 cursor-pointer mr-2"
-                    onClick={() => openUpdateModal(index)}>
+                    <span
+                      className="text-blue-500 cursor-pointer mr-2"
+                      onClick={() => openUpdateModal(index)}
+                    >
                       Edit
                     </span>
                     <span className="text-gray-400">|</span>
-                    <span className="text-red-500 cursor-pointer ml-2"
-                    onClick={() => handleDelete(index)}>
+                    <span
+                      className="text-red-500 cursor-pointer ml-2"
+                      onClick={() => handleDelete(index)}
+                    >
                       Delete
                     </span>
                   </td>
@@ -236,7 +234,9 @@ const UnitLessions = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-8 w-1/2 rounded shadow-md">
-            <h2 className="text-2xl font-bold mb-4">{isUpdateMode ? "Update Unit" : "Create Unit"}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {isUpdateMode ? "Update Unit" : "Create Unit"}
+            </h2>
             {/* Form for creating a unit */}
             <form onSubmit={isUpdateMode ? updateUnit : createUnit}>
               <div className="mb-4">
