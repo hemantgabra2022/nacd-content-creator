@@ -15,7 +15,7 @@ const UnitLessions = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
+
   // Dummy data for table
   const dummyData = [
     {
@@ -100,10 +100,8 @@ const UnitLessions = () => {
     },
   ];
 
-  const [data, setData] = useState(
-    dummyData
-  );
-  const maxId = Math.max(...data.map(item => item.id), 0);
+  const [data, setData] = useState(dummyData);
+  const maxId = Math.max(...data.map((item) => item.id), 0);
   let nextId = maxId + 1;
 
   const createUnit = async (e) => {
@@ -121,11 +119,11 @@ const UnitLessions = () => {
     setData((prevData) => [...prevData, newUnit]);
 
     // Reset the form data
-    setUnitName('');
-    setGradeName('');
-    setLessonName('');
-    setDuration('');
-    setAssessment('');
+    setUnitName("");
+    setGradeName("");
+    setLessonName("");
+    setDuration("");
+    setAssessment("");
     closeModal();
   };
 
@@ -133,9 +131,9 @@ const UnitLessions = () => {
     setIsModalOpen(true);
     setIsUpdateMode(true);
     setUpdateItemId(itemId);
-  
+
     const selectedItem = data.find((item) => item.id === itemId);
-  
+
     if (selectedItem) {
       setUnitName(selectedItem.unitName);
       setGradeName(selectedItem.gradeName);
@@ -147,10 +145,10 @@ const UnitLessions = () => {
       closeModal();
     }
   };
-  
+
   const updateUnit = (e) => {
     e.preventDefault();
-  
+
     const updatedData = data.map((item) =>
       item.id === updateItemId
         ? {
@@ -163,22 +161,22 @@ const UnitLessions = () => {
           }
         : item
     );
-  
+
     setData(updatedData);
     closeModal();
     // Reset form fields
-    setUnitName('');
-    setGradeName('');
-    setLessonName('');
-    setDuration('');
-    setAssessment('');
+    setUnitName("");
+    setGradeName("");
+    setLessonName("");
+    setDuration("");
+    setAssessment("");
   };
 
-  const [unitName, setUnitName] = useState('');
-  const [gradeName, setGradeName] = useState('');
-  const [lessonName, setLessonName] = useState('');
-  const [duration, setDuration] = useState('');
-  const [assessment, setAssessment] = useState('');
+  const [unitName, setUnitName] = useState("");
+  const [gradeName, setGradeName] = useState("");
+  const [lessonName, setLessonName] = useState("");
+  const [duration, setDuration] = useState("");
+  const [assessment, setAssessment] = useState("");
 
   const handleDelete = (itemId) => {
     const isConfirmed = window.confirm(
@@ -189,17 +187,17 @@ const UnitLessions = () => {
     }
   };
   const getUniqueGradeNames = () => {
-    const uniqueGradeNames = [...new Set(data.map(item => item.gradeName))];
+    const uniqueGradeNames = [...new Set(data.map((item) => item.gradeName))];
     return uniqueGradeNames;
   };
   const uniqueGradeNames = getUniqueGradeNames();
-  const filteredData = selectedGradeName ? data.filter((item) => item.gradeName === selectedGradeName) : data;
-
-  
+  const filteredData = selectedGradeName
+    ? data.filter((item) => item.gradeName === selectedGradeName)
+    : data;
 
   return (
     <RightContent>
-      <div className="px-4 py-8">
+      <div className="px-4">
         <h1 className="text-3xl font-bold mb-4">Unit & Lessons</h1>
         <div className="bg-white p-4 rounded shadow-md">
           <div className="flex items-center mb-4">
@@ -207,10 +205,14 @@ const UnitLessions = () => {
               <label className="block text-sm font-medium text-gray-600">
                 Select Grade
               </label>
-              <select className="mt-1 p-2 border rounded w-full max-w-64"
-              value={selectedGradeName}
-              onChange={(e) => setSelectedGradeName(e.target.value)}>
-                <option value="" defaultValue>Select</option>
+              <select
+                className="mt-1 p-2 border rounded w-full max-w-64"
+                value={selectedGradeName}
+                onChange={(e) => setSelectedGradeName(e.target.value)}
+              >
+                <option value="" defaultValue>
+                  Select
+                </option>
                 {uniqueGradeNames.map((gradeName, index) => (
                   <option key={index}>{gradeName}</option>
                 ))}
@@ -246,13 +248,17 @@ const UnitLessions = () => {
                   <td className="border p-2">{data.duration}</td>
                   <td className="border p-2">{data.assessment}</td>
                   <td className="border p-2">
-                    <span className="text-blue-500 cursor-pointer mr-2"
-                    onClick={() => openUpdateModal(data.id)}>
+                    <span
+                      className="text-blue-500 cursor-pointer mr-2"
+                      onClick={() => openUpdateModal(data.id)}
+                    >
                       Edit
                     </span>
                     <span className="text-gray-400">|</span>
-                    <span className="text-red-500 cursor-pointer ml-2"
-                    onClick={() => handleDelete(data.id)}>
+                    <span
+                      className="text-red-500 cursor-pointer ml-2"
+                      onClick={() => handleDelete(data.id)}
+                    >
                       Delete
                     </span>
                   </td>
@@ -267,7 +273,9 @@ const UnitLessions = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-8 w-1/2 rounded shadow-md">
-            <h2 className="text-2xl font-bold mb-4">{isUpdateMode ? "Update Unit" : "Create Unit"}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {isUpdateMode ? "Update Unit" : "Create Unit"}
+            </h2>
             {/* Form for creating a unit */}
             <form onSubmit={isUpdateMode ? updateUnit : createUnit}>
               <div className="mb-4">

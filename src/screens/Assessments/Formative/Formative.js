@@ -160,7 +160,7 @@ const Formative = () => {
 
   return (
     <RightContent>
-      <div className="px-4 py-8">
+      <div className="px-4">
         <h1 className="text-3xl font-bold mb-4">Formative Assessments</h1>
         <div className="bg-white p-4 rounded shadow-md">
           <div className="flex items-center mb-4">
