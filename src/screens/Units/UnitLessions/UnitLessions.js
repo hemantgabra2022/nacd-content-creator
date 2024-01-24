@@ -181,8 +181,12 @@ const UnitLessions = () => {
   const [assessment, setAssessment] = useState('');
 
   const handleDelete = (itemId) => {
-    console.log(itemId);
-    setData((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this record?"
+    );
+    if (isConfirmed) {
+      setData((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    }
   };
   const getUniqueGradeNames = () => {
     const uniqueGradeNames = [...new Set(data.map(item => item.gradeName))];
