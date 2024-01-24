@@ -21,20 +21,26 @@ const Summative = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditIndex(null);
+    // Reset gradeName and unitName when closing the modal
+    setFormData({
+      ...formData,
+      gradeName: "",
+      unitName: "",
+    });
   };
 
   const [dummyData, setDummyData] = useState([
     {
-      title: "Sample Unit 1",
-      description: "Lesson 1",
+      title: "Sample Grade 1",
+      description: "Unit 1",
       pdf: "2:30",
       assessment: "Assessment 1",
       literacyType: "Type A",
       assessmentType: "Type X",
     },
     {
-      title: "Sample Unit 2",
-      description: "Lesson 2",
+      title: "Sample Grade 2",
+      description: "Unit 2",
       pdf: "3:00",
       assessment: "Assessment 2",
       literacyType: "Type B",
@@ -207,6 +213,7 @@ const Summative = () => {
                     >
                       Edit
                     </span>
+                    <span className="text-gray-400">|</span>
                     <span
                       className="text-red-500 cursor-pointer ml-2"
                       onClick={() => handleDelete(index)}
