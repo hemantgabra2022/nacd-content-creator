@@ -6,6 +6,8 @@ const UnitLessions = () => {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [updateItemId, setUpdateItemId] = useState(null);
   const [selectedGradeName, setSelectedGradeName] = useState(null);
+  const [currentPdf, setCurrentPdf] = useState(""); // New state for current file name
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -24,70 +26,70 @@ const UnitLessions = () => {
       title: "Sample Unit 1",
       gradeName: "Grade 1",
       description: "Lesson 1",
-      pdf: "2:30",
+      pdf: "sample1.pdf",
     },
     {
       id: 2,
       title: "Sample Unit 2",
       gradeName: "Grade 2",
       description: "Lesson 2",
-      pdf: "3:00",
+      pdf: "sample2.pdf",
     },
     {
       id: 3,
       title: "Sample Unit 3",
       gradeName: "Grade 3",
       description: "Lesson 3",
-      pdf: "1:45",
+      pdf: "sample3.pdf",
     },
     {
       id: 4,
       title: "Sample Unit 4",
       gradeName: "Grade 4",
       description: "Lesson 4",
-      pdf: "2:15",
+      pdf: "sample4.pdf",
     },
     {
       id: 5,
       title: "Sample Unit 5",
       gradeName: "Grade 5",
       description: "Lesson 5",
-      pdf: "1:30",
+      pdf: "sample5.pdf",
     },
     {
       id: 6,
       title: "Sample Unit 6",
       gradeName: "Grade 6",
       description: "Lesson 6",
-      pdf: "2:00",
+      pdf: "sample6.pdf",
     },
     {
       id: 7,
       title: "Sample Unit 7",
       gradeName: "Grade 7",
       description: "Lesson 7",
-      pdf: "1:15",
+      pdf: "sample7.pdf",
     },
     {
       id: 8,
       title: "Sample Unit 8",
       gradeName: "Grade 8",
       description: "Lesson 8",
-      pdf: "2:45",
+      pdf: "sample8.pdf",
     },
     {
       id: 9,
       title: "Sample Unit 9",
       gradeName: "Grade 9",
       description: "Lesson 9",
-      pdf: "1:00",
+      pdf: "sample9.pdf",
     },
     {
       id: 10,
       title: "Sample Unit 10",
       gradeName: "Grade 10",
       description: "Lesson 10",
-      pdf: "2:30",
+      pdf: "sample10.pdf",
     },
   ];
 
@@ -106,7 +108,7 @@ const UnitLessions = () => {
       title,
       gradeName,
       description,
-      pdf,
+      pdf: selectedFile ? selectedFile.name : '',
     };
 
     setData((prevData) => [...prevData, newOutcome]);
@@ -115,8 +117,8 @@ const UnitLessions = () => {
     setTitle('');
     setGradeName('');
     setDescription('');
-    setPdf('');
-
+    setSelectedFile(null);
+    setCurrentPdf(""); // Reset the current file name
     closeModal();
   };
 
@@ -131,7 +133,7 @@ const UnitLessions = () => {
       setTitle(selectedItem.title);
       setGradeName(selectedItem.gradeName);
       setDescription(selectedItem.description);
-      setPdf(selectedItem.pdf);
+      setCurrentPdf(selectedItem.pdf); // Set the current file name
     } else {
       console.error(`Item with ID ${itemId} not found.`);
       closeModal();
@@ -148,7 +150,7 @@ const UnitLessions = () => {
             title,
             gradeName,
             description,
-            pdf,
+            pdf: selectedFile ? selectedFile.name : item.pdf,
           }
         : item
     );
@@ -159,7 +161,8 @@ const UnitLessions = () => {
     setTitle('');
     setGradeName('');
     setDescription('');
-    setPdf('');
+    setCurrentPdf(""); // Reset the current file name
+    setSelectedFile(null);
   };
 
   const [title, setTitle] = useState('');
@@ -168,8 +171,12 @@ const UnitLessions = () => {
   const [pdf, setPdf] = useState('');
 
   const handleDelete = (itemId) => {
-    console.log(itemId);
-    setData((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this record?"
+    );
+    if (isConfirmed) {
+      setData((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    }
   };
   const getUniqueGradeNames = () => {
     const uniqueGradeNames = [...new Set(data.map(item => item.gradeName))];
@@ -223,7 +230,15 @@ const UnitLessions = () => {
                   <td className="border p-2">{data.title}</td>
                   <td className="border p-2">{data.gradeName}</td>
                   <td className="border p-2">{data.description}</td>
-                  <td className="border p-2">{data.pdf}</td>
+                  <td className="border p-2">
+                  <a
+                      href={`path/to/pdf/${data.pdf}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {data.pdf}
+                    </a>
+                  </td>
                   <td className="border p-2">
                     <span className="text-blue-500 cursor-pointer mr-2"
                     onClick={() => openUpdateModal(data.id)}>
@@ -287,15 +302,21 @@ const UnitLessions = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">
-                  pdf (HH:MM)
+                  pdf
                 </label>
                 <input
-                  type="text"
+                  type="file"
+                  accept=".pdf"
                   className="mt-1 p-2 border rounded w-full"
                   placeholder="Enter pdf"
-                  value={pdf}
-                  onChange={(e) => setPdf(e.target.value)}
+                  onChange={(e) => setSelectedFile(e.target.files[0])}
                 />
+                {selectedFile && <p className="mt-2 text-sm text-gray-500">{selectedFile.name}</p>}
+                {!selectedFile && currentPdf && (
+                  <p className="mt-2 text-sm text-gray-500">
+                    Current file: {currentPdf}
+                  </p>
+                )}
               </div>
               
               <div className="flex justify-end">
