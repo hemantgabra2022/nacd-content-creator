@@ -11,7 +11,7 @@ import logo from "../../assets/img/nacd_logo.png";
 
 
 
-export const Login = () => {
+export const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [userEmailID, setUserEmailID] = useState("");
@@ -38,6 +38,7 @@ export const Login = () => {
       // Successful login
       setError("");
       localStorage.setItem("token", "dummyToken"); // Replace with a real token if needed
+      onLogin();
       navigate('/unitlessions');
     } else {
       // Handle login failure
