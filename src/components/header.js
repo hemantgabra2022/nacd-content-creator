@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import userIcon from "../assets/img/userIcon.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token", "dummyToken");
+    navigate('/login');
   };
 
   return (
@@ -43,12 +50,12 @@ const Header = () => {
             >
               My Profile
             </a>
-            <a
-              href="#"
-              className="block py-2 px-4 hover:bg-blue-500 hover:text-white"
+            <button
+              className="block py-2 px-4 hover:bg-blue-500 hover:text-white w-full text-left"
+              onClick={logout}
             >
               Logout
-            </a>
+            </button>
           </div>
         )}
       </div>

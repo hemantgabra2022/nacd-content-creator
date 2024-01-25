@@ -16,32 +16,32 @@ export const Login = () => {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [userEmailID, setUserEmailID] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    try {
-      const formData = {
-        email: userEmailID,
-        password: userPassword,
-  }
-      // Make a POST request to your server endpoint
-      const response = await axios.post(`${apiUrl}/api/v1/auth/login`, queryString.stringify(formData), {
-        
-      });
+    const staticCredentials = [
+      { email: "testuser1@example.com", password: "password1" },
+      { email: "testuser2@example.com", password: "password2" },
+      // Add more static credentials as needed
+    ];
 
-      // Handle the response, e.g., store user token in state or localStorage
-      console.log("Login successful:", response.data);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userId", response.data.user_id);
-      
-      navigate('/unitlessions')
-      
+    // Check if the entered credentials match any of the static credentials
+    const matchedCredential = staticCredentials.find(
+      (cred) =>
+        cred.email === userEmailID.trim().toLowerCase() &&
+        cred.password === userPassword
+    );
 
-      // Redirect or perform any other action on successful login
-    } catch (error) {
-      // Handle login failure, e.g., show an error message
-      console.error("Login failed:", error);
+    if (matchedCredential) {
+      // Successful login
+      setError("");
+      localStorage.setItem("token", "dummyToken"); // Replace with a real token if needed
+      navigate('/unitlessions');
+    } else {
+      // Handle login failure
+      setError("Invalid email or password");
     }
   };
 

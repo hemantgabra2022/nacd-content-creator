@@ -15,6 +15,11 @@ const LeftMenu = () => {
     setShowSecondSubMenu(!showSecondSubMenu);
   };
 
+  const isUserLoggedIn = localStorage.getItem('token') != null;
+  if(!isUserLoggedIn) {
+    return null
+  }
+
   return (
     <div className="bg-[#458dff] text-white w-64 min-h-screen">
       <div className="p-4">
