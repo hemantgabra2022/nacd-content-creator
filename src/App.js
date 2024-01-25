@@ -47,7 +47,8 @@ function App() {
       <div className="flex bg-red-500">
         <LeftMenu />
         <Routes>
-          <Route path="/" element={<UnitLessions />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/unitlessions" element={<UnitLessions />} />
           <Route path="/outcomes" element={<Outcomes />} />
           <Route path="/learningroadmap" element={<LearningRoadmap />} />
