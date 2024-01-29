@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import RightContent from "../../../components/rightcontent";
 const UnitLessions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVdoModalOpen, setIsVdoModalOpen] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [updateItemId, setUpdateItemId] = useState(null);
   const [selectedGradeName, setSelectedGradeName] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -16,6 +18,14 @@ const UnitLessions = () => {
     setIsModalOpen(false);
   };
 
+  const openVdoModal = (url) => {
+    setVideoUrl(url);
+    setIsVdoModalOpen(true);
+  };
+  const closeVdoModal = () => {
+    setIsVdoModalOpen(false);
+  };
+
   // Dummy data for table
   const dummyData = [
     {
@@ -25,6 +35,7 @@ const UnitLessions = () => {
       lessonName: "Basic concepts of algebra, solving equations",
       duration: "02:30",
       assessment: "Mid-term exam, problem-solving tasks",
+      videoUrl: "https://www.youtube.com/embed/EngW7tLk6R8?si=AqUWozfo6DFzuPEX",
     },
     {
       id: 1,
@@ -33,6 +44,7 @@ const UnitLessions = () => {
       lessonName: "Causes, major events, impact",
       duration: "03:00",
       assessment: "Research project, oral presentations",
+      videoUrl: "https://www.youtube.com/embed/a3ICNMQW7Ok?si=xgs_zxPM5R_q-J-3",
     },
     {
       id: 2,
@@ -41,6 +53,7 @@ const UnitLessions = () => {
       lessonName: "Process, importance, factors affecting",
       duration: "02:15",
       assessment: "Lab experiments, written quizzes",
+      videoUrl: "https://www.youtube.com/embed/K4TOrB7at0Y?si=L-xeboe9g46yemis",
     },
     {
       id: 3,
@@ -49,6 +62,7 @@ const UnitLessions = () => {
       lessonName: "Shakespearean literature, tragic love story",
       duration: "03:30",
       assessment: "Analytical essays, dramatic performances",
+      videoUrl: "https://www.youtube.com/embed/PCwL3-hkKrg?si=jy3LlHOAlGR3rOz9",
     }
   ];
 
@@ -196,7 +210,14 @@ const UnitLessions = () => {
                 <tr key={data.id}>
                   <td className="border p-2">{data.unitName}</td>
                   <td className="border p-2">{data.gradeName}</td>
-                  <td className="border p-2">{data.lessonName}</td>
+                  <td className="border p-2">
+                      <span
+                      className="text-blue-500 cursor-pointer"
+                      onClick={() => openVdoModal(data.videoUrl)}
+                      >
+                      {data.lessonName}
+                      </span>
+                  </td>
                   <td className="border p-2">{data.duration}</td>
                   <td className="border p-2">{data.assessment}</td>
                   <td className="border p-2">
@@ -220,7 +241,28 @@ const UnitLessions = () => {
           </table>
         </div>
       </div>
-
+      {isVdoModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-8 w-1/2 rounded shadow-md">
+            <iframe src={videoUrl}
+              frameborder='0'
+              allow='autoplay; encrypted-media'
+              height= '400'
+              width= '100%'
+              allowfullscreen
+              title='video'
+            />
+            <div className="flex justify-end">
+                <button
+                  className="bg-gray-500 text-white px-4 py-2 my-2 rounded"
+                  onClick={closeVdoModal}
+                >
+                  Cancel
+                </button>
+              </div>
+          </div>
+        </div>
+      )}
       {/* Modal for Create Unit */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
