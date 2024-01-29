@@ -15,6 +15,7 @@ import Summative from "./screens/Assessments/Summative/Summative";
 import Login from "./screens/Login/Login";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState("/");
 
   const navigate = useNavigate();
@@ -22,6 +23,18 @@ function App() {
   const handleNavigation = (path) => {
     setCurrentPage(path);
     navigate(path);
+  };
+
+  const handleLogin = () => {
+    localStorage.setItem("token", "dummyToken");
+    setIsLoggedIn(true);
+    navigate('/unitlessions');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate('/login');
   };
 
   return (
@@ -45,15 +58,30 @@ function App() {
     // </div>
     <div>
       <div className="flex bg-red-500">
-        <LeftMenu />
-        <Routes>
-          <Route path="/" element={<UnitLessions />} />
-          <Route path="/unitlessions" element={<UnitLessions />} />
-          <Route path="/outcomes" element={<Outcomes />} />
-          <Route path="/learningroadmap" element={<LearningRoadmap />} />
-          <Route path="/Formative" element={<Formative />} />
-          <Route path="/Summative" element={<Summative />} />
-        </Routes>
+      {isLoggedIn && <LeftMenu onLogout={handleLogout} />}
+      <Routes>
+        <Route
+          path="/login"
+          element={<Login onLogin={handleLogin} />}
+        />
+        {isLoggedIn ? (
+          <>
+            <Route
+              path="/unitlessions"
+              element={<UnitLessions />}
+            />
+            <Route path="/outcomes" element={<Outcomes />} />
+            <Route path="/learningroadmap" element={<LearningRoadmap />} />
+            <Route path="/Formative" element={<Formative />} />
+            <Route path="/Summative" element={<Summative />} />
+          </>
+        ) : (
+          <Route
+            path="/*"
+            element={<Navigate to="/login" />}
+          />
+        )}
+      </Routes>
       </div>
     </div>
   );

@@ -40,21 +40,21 @@ const Summative = () => {
 
   const [dummyData, setDummyData] = useState([
     {
-      title: "Sample Grade 1",
-      description: "Unit 1",
-      pdf: "2:30",
-      assessment: "Assessment 1",
-      literacyType: "Type A",
-      assessmentType: "Type X",
+      title: "Grade 3",
+      description: "Introduction to Algebra",
+      pdf: "variable_quiz.pdf",
+      assessment: "Mid-term exam, problem-solving tasks",
+      literacyType: "Mathematics",
+      assessmentType: "Online Quiz",
       lastDate: new Date("2024-01-31"), // Convert to Date object
     },
     {
-      title: "Sample Grade 2",
-      description: "Unit 2",
-      pdf: "3:00",
-      assessment: "Assessment 2",
-      literacyType: "Type B",
-      assessmentType: "Type Y",
+      title: "Grade 2",
+      description: "Photosynthesis",
+      pdf: "reaction_lab_report.pdf",
+      assessment: "Lab experiments, written quizzes",
+      literacyType: "Science",
+      assessmentType: "Laboratory Report",
       lastDate: new Date("2024-02-15"), // Convert to Date object
     },
     // ... (more data)
