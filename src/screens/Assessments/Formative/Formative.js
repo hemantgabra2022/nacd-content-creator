@@ -37,22 +37,22 @@ const Formative = () => {
 
   const [dummyData, setDummyData] = useState([
     {
-      title: "Sample Grade 1",
-      description: "Unit 1",
-      lesson: "Lesson 1", // Added lesson property
-      pdf: "2:30",
-      assessment: "Assessment 1",
-      literacyType: "Type A",
-      assessmentType: "Type X",
+      title: "Grade 7",
+      description: "Unit 2: Geometry Fundamentals",
+      lesson: "Basic concepts of algebra, solving equations", // Added lesson property
+      pdf: "variable_quiz.pdf",
+      assessment: "Variable Quiz",
+      literacyType: "Mathematics",
+      assessmentType: "Online Quiz",
     },
     {
-      title: "Sample Grade 2",
-      description: "Unit 2",
-      lesson: "Lesson 2", // Added lesson property
-      pdf: "3:00",
-      assessment: "Assessment 2",
-      literacyType: "Type B",
-      assessmentType: "Type Y",
+      title: "Grade 6",
+      description: "Understanding how plants produce and consume energy",
+      lesson: "Types of Reactions", // Added lesson property
+      pdf: "reaction_lab_report.pdf",
+      assessment: "Reaction Lab Report",
+      literacyType: "Science",
+      assessmentType: "Laboratory Report",
     },
     // ... (more data)
   ]);
